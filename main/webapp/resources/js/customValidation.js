@@ -1,6 +1,7 @@
 
 $(document).ready(function() {
 
+	
 	$("#email_error").hide();
 
 	$("#password_error").hide();

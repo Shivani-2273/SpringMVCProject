@@ -190,7 +190,7 @@ $(document).ready(function() {
 
       for (var i = 0; i < $(".container-item").length; i++) {
         var selector = `.container-item[data-index="${i}"]`;
-
+		console.log("selector",selector);
         setAllCallbacks(selector);
 
       }

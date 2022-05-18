@@ -1,20 +1,24 @@
 package com.usermanagement.model;
 
 import java.time.LocalDateTime;
-import java.util.Date;
+import java.util.Base64;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.OneToMany;
-import javax.persistence.Temporal;
-
+import javax.persistence.Transient;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 @Entity
 public class User {
 
@@ -26,23 +30,34 @@ public class User {
 	@Column(name = "is_admin")
 	private boolean isAdmin;
 
-	@Column(name = "first_name")
+	@Column(name = "first_name", nullable = false)
+	@NotNull(message = "First name can not be null")
 	private String firstName;
 
 	@Column(name = "last_name")
+	@NotNull(message = "last name can not be null")
 	private String lastName;
 
+	@Email(message = "Email should be valid")
+	@NotNull(message = "Email can not be null")
 	private String email;
+
+	@NotNull(message = "Password can not be null")
 	private String password;
 
 	@Column(name = "contact_no")
+	@NotNull(message = "Phone number can not be null")
+	@Size(min = 10, max = 10, message = "Phone number should be of 10 digit")
 	private String contactNo;
 
+	@NotNull(message = "Please select gender")
 	private String gender;
 
 	@Column(name = "birth_date")
+	@NotNull(message = "Please select birthdate")
 	private String birthDate;
 
+	@NotNull(message = "Please select atleast one language")
 	private String languages;
 
 	@CreationTimestamp
@@ -53,35 +68,23 @@ public class User {
 	@Column(name = "updated_at")
 	private LocalDateTime updatedAt;
 
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<Address> address;
+
+	@Column(name = "profile_image")
+	@Lob
+	private byte[] image;
+
+	@Transient
+	String base64Image;
+
+	@Transient
+	CommonsMultipartFile file;
+
 
 	public User() {
 		super();
 	}
-
-
-	public User(int userId, boolean isAdmin, String firstName, String lastName, String email, String password,
-			String contactNo, String gender, String birthDate, String languages, LocalDateTime createdAt,
-			LocalDateTime updatedAt, List<Address> address) {
-		super();
-		this.userId = userId;
-		this.isAdmin = isAdmin;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.email = email;
-		this.password = password;
-		this.contactNo = contactNo;
-		this.gender = gender;
-		this.birthDate = birthDate;
-		this.languages = languages;
-		this.createdAt = createdAt;
-		this.updatedAt = updatedAt;
-		this.address = address;
-	}
-
-
-
 	public int getUserId() {
 		return userId;
 	}
@@ -126,8 +129,10 @@ public class User {
 		return password;
 	}
 
-	public void setPassword(String password) {
-		this.password = password;
+	public void setPassword(String password){
+		//byte[] encryptionBytes = Encryption_Decryption.encrypt(password);
+		//this.password = new String(encryptionBytes);
+		this.password=password;
 	}
 
 	public String getContactNo() {
@@ -183,18 +188,40 @@ public class User {
 	}
 
 	public void setAddress(List<Address> address) {
+		System.out.println("in address list");
 		this.address = address;
 	}
 
+	public byte[] getImage() {
+		return image;
+	}
 
+	public void setImage(byte[] image) {
+		this.image = image;
+	}
+
+	public String getBase64Image() {
+
+		return Base64.getEncoder().encodeToString(image);
+	}
+
+	public void setBase64Image(String base64Image) {
+		this.base64Image = base64Image;
+	}
+
+	public CommonsMultipartFile getFile() {
+		return file;
+	}
+
+	public void setFile(CommonsMultipartFile file) {
+		this.image = file.getBytes();
+	}
 	@Override
 	public String toString() {
-		return "User [userId=" + userId + ", isAdmin=" + isAdmin + ", firstName=" + firstName + ", lastName=" + lastName
-				+ ", email=" + email + ", password=" + password + ", contactNo=" + contactNo + ", gender=" + gender
-				+ ", birthDate=" + birthDate + ", languages=" + languages + ", createdAt=" + createdAt + ", updatedAt="
-				+ updatedAt + ", address=" + address + "]";
-	}	
-	
-	
+		return "User [userId=" + userId + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
+				+ ", contactNo=" + contactNo + ", gender=" + gender + ", birthDate=" + birthDate + ", languages="
+				+ languages + ", address=" + address + "]";
+	}
 
+		
 }

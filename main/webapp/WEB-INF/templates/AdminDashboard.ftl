@@ -67,7 +67,7 @@
 				<ul>
 					<li class="relative px-6 py-3"><a
 						class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-						href="UserRegister"> <svg class="w-5 h-5" aria-hidden="true" fill="none"
+						href="addUser?myuser=admin"> <svg class="w-5 h-5" aria-hidden="true" fill="none"
 								stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
 								viewBox="0 0 24 24" stroke="currentColor">
                   <path
@@ -155,7 +155,7 @@
 					
 					<li class="relative px-6 py-3"><a
 						class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-						href="UserRegister"> <svg class="w-5 h-5" aria-hidden="true"
+						href="addUser?myuser=admin"> <svg class="w-5 h-5" aria-hidden="true"
 								fill="none" stroke-linecap="round" stroke-linejoin="round"
 								stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
                   <path
@@ -227,25 +227,27 @@
 					
 						<h1 class="font-large my-2 text-4xl">Your Profile</h1>
 					<table class="table">						
-							<#-- List of profile -->
+							
+								
 								<tr  class="border-2">
-									<td class="font-bold border-2">Name</td><td class="border-2"></td>
+									<td class="font-bold border-2">Name</td><td class="border-2">${adminProfile.firstName}</td>
 								<tr  class="border-2">
-									<td class="font-bold border-2">Email</td><td class="border-2"></td>
+									<td class="font-bold border-2">Email</td><td class="border-2">${adminProfile.lastName}</td>
 								<tr  class="border-2">
-									<td class="font-bold border-2">Phone Number</td><td class="border-2"></td>
+									<td class="font-bold border-2">Phone Number</td><td class="border-2">${adminProfile.contactNo}</td>
 								<tr  class="border-2">
-									<td class="font-bold border-2">Gender</td><td class="border-2"></td>
+									<td class="font-bold border-2">Gender</td><td class="border-2">${adminProfile.gender}</td>
 								<tr  class="border-2">
-									<td class="font-bold border-2">Birth Date</td><td class="border-2"></td>
+									<td class="font-bold border-2">Birth Date</td><td class="border-2">${adminProfile.birthDate}</td>
 									
 								<tr  class="border-2">
-									<td class="font-bold border-2">Known Languages</td><td class="border-2"></td>
+									<td class="font-bold border-2">Known Languages</td><td class="border-2">${adminProfile.languages}</td>
 									
 								<tr  class="border-2">
-									<td class="font-bold border-2">Profile Image</td><td class="border-2"><img src=""  class="center"> </td>
+								<td class="font-bold border-2">Profile Image</td><td class="border-2"><img src="data:image/jpg;base64,${adminProfile.base64Image}"  class="center"> </td>	
+								
 					
-			
+							
 									
 					</table>
 					</div>

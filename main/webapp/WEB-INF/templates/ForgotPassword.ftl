@@ -38,7 +38,7 @@
               >
                 Forgot password
               </h1>
-              <form action="passwordURL" method="POST" id="resetPassword">
+              <form action="passwordURL" method="POST" id="resetPassword" modelAttribute="resetPassword">
               <label class="block mt-2 mt-4 text-md font-semibold">
                 <span class="text-gray-700 dark:text-gray-400">Email</span>
                 <input

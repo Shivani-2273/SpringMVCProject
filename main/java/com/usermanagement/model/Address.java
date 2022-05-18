@@ -1,7 +1,5 @@
 package com.usermanagement.model;
 
-import java.util.Arrays;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,7 +7,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.Transient;
 
 @Entity
 public class Address {
@@ -25,9 +22,7 @@ public class Address {
 	private String state;
 	private String pin;
 
-	@Transient
-	private String removeAddressId;
-
+	
 	@ManyToOne
 	@JoinColumn(name = "user_id")
 	private User user;
@@ -37,7 +32,7 @@ public class Address {
 	}
 
 
-	public Address(int addressId, String addressLine, String city, String state, String pin, String removeAddressId,
+	public Address(int addressId, String addressLine, String city, String state, String pin,
 			User user) {
 		super();
 		this.addressId = addressId;
@@ -45,7 +40,6 @@ public class Address {
 		this.city = city;
 		this.state = state;
 		this.pin = pin;
-		this.removeAddressId = removeAddressId;
 		this.user = user;
 	}
 
@@ -67,6 +61,7 @@ public class Address {
 	public void setAddressLine(String addressLine) {
 		this.addressLine = addressLine;
 	}
+
 
 	public String getCity() {
 		return city;
@@ -92,14 +87,6 @@ public class Address {
 		this.pin = pin;
 	}
 
-	public String getRemoveAddressId() {
-		return removeAddressId;
-	}
-
-	public void setRemoveAddressId(String removeAddressId) {
-		this.removeAddressId = removeAddressId;
-	}
-
 	public User getUser() {
 		return user;
 	}
@@ -107,6 +94,17 @@ public class Address {
 	public void setUser(User user) {
 		this.user = user;
 	}
+
+
+	@Override
+	public String toString() {
+		return "Address [addressId=" + addressId + ", addressLine=" + addressLine + ", city=" + city + ", state="
+				+ state + ", pin=" + pin + "]";
+	}
+
+
+	
+
 
 	
 

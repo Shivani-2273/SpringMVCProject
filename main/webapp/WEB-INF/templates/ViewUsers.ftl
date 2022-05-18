@@ -9,7 +9,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css">
-<link rel="stylesheet" href="resorces/css/tailwind.output.css" />
+<link rel="stylesheet" href="resources/css/tailwind.output.css" />
 <!-- data table -->
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
@@ -75,7 +75,7 @@
 				<ul>
 					<li class="relative px-6 py-3"><a
 						class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-						href="UserRegister"> <svg class="w-5 h-5" aria-hidden="true" fill="none"
+						href="addUser?myuser=admin"> <svg class="w-5 h-5" aria-hidden="true" fill="none"
 								stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
 								viewBox="0 0 24 24" stroke="currentColor">
                   <path
@@ -165,7 +165,7 @@
 					
 					<li class="relative px-6 py-3"><a
 						class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-						href="UserRegsiter"> <svg class="w-5 h-5" aria-hidden="true"
+						href="addUser?myuser=admin"> <svg class="w-5 h-5" aria-hidden="true"
 								fill="none" stroke-linecap="round" stroke-linejoin="round"
 								stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
                   <path
@@ -246,26 +246,25 @@
 							</thead>
 							<tbody>
 								<#-- user details list for each-->
+								<#list UserList as UserList>
 								<#-- passuser id with addressInfo -->
 									<tr>
-										<td><a href="AddressInfo"></a></td>
-										<td></td>
-										<td></td>
-										<td></td>
-										<td></td>
-										<td></td>
-										<td></td>
-										<td><img src="" width="100px" height="3px" style="border-radius:20%"></td>
-										<td><a href="GetUserData?user=adminEdit&userId=">
+										<td><a href="AddressInfo?id=${UserList.userId}">${UserList.firstName}</a></td>
+										<td>${UserList.lastName}</td>
+										<td>${UserList.email}</td>
+										<td>${UserList.contactNo}</td>
+										<td>${UserList.gender}</td>
+										<td>${UserList.birthDate}</td>
+										<td>${UserList.languages}</td>
+										 <td><img src="data:image/jpg;base64,${UserList.base64Image}" width="100px" height="3px" style="border-radius:20%"></td> 
+										<td><a href="editProfile?user=adminEdit&id=${UserList.userId}">
 										<i class="fa-solid fa-pen-to-square fa-lg"></i></a>&nbsp;&nbsp;
-										<i class="fa-solid fa-trash fa-lg delete" id=""></i></td>
+										<i class="fa-solid fa-trash fa-lg delete" id="${UserList.userId}"></i></td>
 									</tr>
-								
+								</#list>
 							</tbody>
 
 						</table>
-				
-				
 			</div>
 						
 			
@@ -289,10 +288,13 @@
 				data : ({
 					userId : userId,
 				}),
-				success : function(response) {
-					$(row).closest('tr').fadeOut(200, function() {
+				success : function(data) {
+				$(row).closest('tr').fadeOut(200, function() {
 						$(this).remove();
 					});
+				},
+				error:function(data){
+					alert("in error")
 				}
 			});
 		})

@@ -1,4 +1,4 @@
-(function($) {
+	(function($) {
 
     $.fn.cloneData = function(options, callback) {
 
@@ -46,7 +46,7 @@
             settings.beforeRender.call(this);
 
             var item_exists = $('.' + settings.cloneContainer).length;
-			console.log(item_exists);
+			console.log("count",item_exists);
             // stop append HTML if maximum limit exceed
             if (settings.maxLimit != 0 && item_exists >= settings.maxLimit){
                 alert("More than "+ settings.maxLimit +" degrees can\'t be added in one form. Please 'Add New'.");
@@ -161,11 +161,14 @@
                     var inputName    = $(this).attr('name');
                     var $inputHidden = $template.find('input[type="hidden"][name="' + inputName + '"]').first();
                     var count        = $template.find('input[type="' + type +'"][name="' + inputName + '"]').length;
+					console.log("inputName",inputName);
+					console.log("count",count);
 
-                    if ($inputHidden && count === 1) {
+                    if ($inputHidden && count === 1){
                         $(this).val(1);
                         $inputHidden.val(0);
                     }
+                    
 
                     //$(this).prop('checked', false);
                     $(this).removeAttr("checked");
